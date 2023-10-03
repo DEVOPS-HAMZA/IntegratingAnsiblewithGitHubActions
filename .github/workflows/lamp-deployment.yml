@@ -13,7 +13,7 @@ jobs:
         uses: ansible/ansible-lint@v6.20.3
         with:
           targets: |
-            ./playbook.yml
-            ./inventory.yml
+            playbook.yml
+            inventory.yml
           args: "-c ansible-lint "
             
