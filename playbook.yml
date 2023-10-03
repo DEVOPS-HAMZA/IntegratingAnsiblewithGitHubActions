@@ -53,7 +53,16 @@
         name: apache2
         state: present
       become: true
+    - name: Update package lists
+      apt:
+        update_cache: yes
+      become: true  # Run tasks with sudo privileges
 
+    - name: Install PHP
+      apt:
+        name: php  # Install PHP package(s) based on your needs
+        state: present
+      become: true  # Run tasks with sudo privileges
     - name: Ensure PHP is installed
       apt:
         name: php7.2
