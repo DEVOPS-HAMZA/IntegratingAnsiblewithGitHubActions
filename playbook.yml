@@ -1,63 +1,51 @@
----
-# roles/apache_php/tasks/main.yml
-
 - name: Ensure .ssh directory exists
   ansible.builtin.file:
     path: ~/.ssh
     mode: '0700'
     state: directory
-
 - name: Ensure known_hosts file exists
   ansible.builtin.copy:
-    content: ""
+    content: ''
     dest: ~/.ssh/known_hosts
     mode: '0600'
-
 - name: Check if known_hosts contains server's fingerprint
-  command: ssh-keygen -F {{ inventory_hostname }}
+  command: 'ssh-keygen -F {{ inventory_hostname }}'
   register: keygen
   failed_when: keygen.stderr != ''
   changed_when: false
-
 - name: Fetch remote SSH key
-  command: ssh-keyscan -T5 {{ inventory_hostname }}
+  command: 'ssh-keyscan -T5 {{ inventory_hostname }}'
   register: keyscan
   failed_when: keyscan.rc != 0 or keyscan.stdout == ''
   changed_when: false
   when: keygen.rc == 1
-
 - name: Add SSH key to local known_hosts
   lineinfile:
     name: ~/.ssh/known_hosts
     create: true
-    line: "{{ item }}"
+    line: '{{ item }}'
     mode: '0600'
   when: keygen.rc == 1
   with_items: '{{ keyscan.stdout_lines|default([]) }}'
-
 - name: Update package lists
   apt:
-    update_cache: yes
+    update_cache: 'yes'
   become: true
-
 - name: Ensure Apt is up to date
   apt:
-    update_cache: yes
+    update_cache: 'yes'
     cache_valid_time: 3600
   become: true
-
 - name: Ensure Apache is installed
   apt:
     name: apache2
     state: present
   become: true
-
 - name: Update server
   apt: update_cache=yes
-
-- name: Install Git, Apache, and Moodle dependencies
+- name: 'Install Git, Apache, and Moodle dependencies'
   apt:
-    name: "{{ packages }}"
+    name: '{{ packages }}'
   vars:
     packages:
       - git-core
@@ -80,19 +68,16 @@
       - php7.2-mbstring
       - php7.2-pspell
       - php7.2-cli
-
 - name: Ensure PHP Module for Apache is installed
   apt:
     name: libapache2-mod-php7.2
     state: present
   become: true
-
 - name: Ensure MySQL Module for Apache is installed
   apt:
     name: php7.2-mysql
     state: present
   become: true
-
 - name: Install PHP File
   ansible.builtin.copy:
     src: files/index.php
@@ -101,7 +86,6 @@
     group: www-data
     mode: '0644'
   become: true
-
 - name: Ensure default HTML file does not exist
   ansible.builtin.file:
     path: /var/www/html/index.html
