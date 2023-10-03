@@ -15,5 +15,5 @@ jobs:
           targets: |
             ./playbook.yml
             ./inventory.yml
-          args: "-c ./ansible-lint"
+          args: "-c ansible-lint "
             
