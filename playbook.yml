@@ -62,7 +62,7 @@
   hosts: D1
   tasks:
   - name: Install PHP File
-    copy:
+    ansible.builtin.copy:
       src: files/index.php
       dest: /var/www/html/index.php
       owner: www-data
