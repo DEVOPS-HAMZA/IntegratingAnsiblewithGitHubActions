@@ -5,4 +5,4 @@ all:
       hosts:
         D1
       vars:
-        ansible_user: flanders
+        ansible_user: root
