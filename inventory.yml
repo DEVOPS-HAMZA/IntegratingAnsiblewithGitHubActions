@@ -3,6 +3,6 @@ all:
   children:
     web-servers:
       hosts:
-        D1
+        165.232.131.61
       vars:
         ansible_user: root

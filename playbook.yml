@@ -1,6 +1,6 @@
 ---
 - name: Basic Configuration, Apache & Application Deployment
-  hosts: D1
+  hosts: 165.232.131.61
   gather_facts: no
   tasks:
     - name: Ensure .ssh directory exists
