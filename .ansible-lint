@@ -1,0 +1,2 @@
+warn_list:
+    - '602' #don't compare to emppty string
