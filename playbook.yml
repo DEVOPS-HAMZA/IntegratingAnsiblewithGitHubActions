@@ -58,22 +58,17 @@
         update_cache: yes
       become: true  # Run tasks with sudo privileges
 
-    - name: Install PHP
-      apt:
-        name: php  # Install PHP package(s) based on your needs
-        state: present
-      become: true  # Run tasks with sudo privileges
     - name: Ensure PHP is installed
-      apt:
-        name: php7.2
-        state: present
-      become: true
+      apt: name=php7.2=7.2.24* state=present
+      become: yes
 
     - name: Ensure PHP Module for Apache is installed
-      apt:
-        name: libapache2-mod-php7.2
-        state: present
-      become: true
+      apt: name=libapache2-mod-php7.2=7.2.24* state=present
+      become: yes
+      
+    - name: Ensure MySql Module for Apache is installed
+      apt: name=php7.2-mysql=7.2.24* state=present
+      become: yes
 
     - name: Ensure MySQL Module for Apache is installed
       apt:
