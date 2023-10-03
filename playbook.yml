@@ -57,10 +57,6 @@
     - name: update server
       apt: update_cache=yes
 
-    - name: Add PHP 7 PPA Repo
-      become: true
-      apt_repository:
-        repo: 'ppa:ondrej/php'
 
     - name: install git, apache and moodle dependencies
       apt:
